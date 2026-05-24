@@ -54,7 +54,8 @@ async function RunCommand(Command) {
 
 // Command Logic
 async function help() {
-    console.log(`to use this program you need a module, you can add a module by typing:\nunifan module add path/to/module.js\n-- Commands ----------
+    console.log(`to use this program you need to add and install a module\n-- Commands ----------
+        \n- Modules -\nunifan module install path/to/module.js - installs enviroment for module to work\nunifan module add path/to/module.js - uses specified module
         \n- Profiles -\nunifan profile add path/to/profile.json - sets the fan profile to provided
         \n- Manual -\nunifan speed % -- sets the fan speed to the provided percent (0-1)
         \n- Misc -\nunifan reload -- reloads the daemon, needed for switching back to using profiles after manualy setting`)
@@ -64,8 +65,12 @@ async function module_add([path]) {
     
     if (path == undefined) {return}
 
+    await RunCommand(`sudo cp ${path} ${CONFIG_DIR}/modules`)
+    let splitFile = path.split('/')
+    let fineName = splitFile[splitFile.length - 1]
+
     let config = await ReadConfig(`${CONFIG_DIR}/config.json`)
-    config.module = path
+    config.module = `${CONFIG_DIR}/modules/${fineName}`
     await WriteConfig(`${CONFIG_DIR}/config.json`, config)
 
     await RunCommand("sudo systemctl restart unifan.service")
@@ -76,8 +81,12 @@ async function profile_add([path]) {
     
     if (path == undefined) {return}
 
+    await RunCommand(`sudo cp ${path} ${CONFIG_DIR}/profiles`)
+    let splitFile = path.split('/')
+    let fineName = splitFile[splitFile.length - 1]
+
     let config = await ReadConfig(`${CONFIG_DIR}/config.json`)
-    config.profile = path
+    config.profile = `${CONFIG_DIR}/profiles/${fineName}`
     await WriteConfig(`${CONFIG_DIR}/config.json`, config)
 
     await RunCommand("sudo systemctl restart unifan.service")
@@ -104,7 +113,7 @@ async function install([path]) {
     console.log("installing...")
     const usedModule = await require(`${path}`)
     await usedModule.install()
-    
+
 }
 
 async function reload() {
