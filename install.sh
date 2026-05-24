@@ -17,4 +17,4 @@ sudo systemctl enable --now unifan.service
 
 sudo install -Dm755 unifan-cmd.js /usr/local/bin/unifan
 
-echo "$CONFIG_DIR"
+echo "Complete!"
