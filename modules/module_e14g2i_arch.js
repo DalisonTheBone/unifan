@@ -58,6 +58,15 @@ async function GetValidTemps() {
 
 }
 
+async function install() {
+    
+    await RunCommand("sudo echo test")
+    await RunCommand("sudo pacman -S --noconfirm lm_sensors")
+    await RunCommand("sudo sensors-detect --auto")
+    await RunCommand("sudo modprobe -r thinkpad_acpi && sudo modprobe thinkpad_acpi fan_control=1")
+    await RunCommand('sudo echo "options thinkpad_acpi fan_control=1" < /etc/modprobe.d/thinkpad_acpi.conf')
+    console.log("installed!")
+}
 
 async function set_speed(speed) {
     
@@ -68,7 +77,7 @@ async function set_speed(speed) {
     if (speed == 0) {speed = "auto"}
     if (speed == 8) {speed = "disengaged"}
 
-    return await RunCommand(`echo "level ${speed}" | tee /proc/acpi/ibm/fan`)
+    return await RunCommand(`sudo echo "level ${speed}" | tee /proc/acpi/ibm/fan`)
 
 }
 
@@ -88,5 +97,6 @@ async function read_temp() {
 // init
 module.exports = {
     set_speed: set_speed,
-    read_temp: read_temp
+    read_temp: read_temp,
+    install: install
 }

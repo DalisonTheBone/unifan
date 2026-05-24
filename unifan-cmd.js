@@ -99,6 +99,14 @@ async function speed([speed]) {
 
 }
 
+async function install([path]) {
+
+    console.log("installing...")
+    const usedModule = await require(`${path}`)
+    await usedModule.install()
+    
+}
+
 async function reload() {
     await RunCommand("sudo systemctl restart unifan.service")
 }
@@ -106,7 +114,7 @@ async function reload() {
 // commands
 let Commands = {
     "help": help,
-    "module": {"add": module_add},
+    "module": {"add": module_add, "install": install},
     "profile": {"add": profile_add},
     "reload": reload,
     "speed": speed
@@ -115,7 +123,7 @@ let Commands = {
 // Init
 async function main() {
 
-    await RunCommand("sudo echo")
+    await RunCommand("sudo echo ")
 
     let commandFunc = Commands
     let args = await process.argv.slice(2);
