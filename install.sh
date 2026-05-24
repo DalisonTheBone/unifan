@@ -1,4 +1,4 @@
-CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/unifan"
+CONFIG_DIR="/etc/unifan"
 BIN_DIR="/usr/bin/unifan-bin"
 
 sudo mkdir -p "$CONFIG_DIR"

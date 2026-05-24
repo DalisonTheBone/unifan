@@ -9,7 +9,7 @@ const util = require("util");
 const Execute = util.promisify(exec);
 
 // Constants
-const CONFIG_DIR=`${os.homedir()}/.config/unifan`
+const CONFIG_DIR=`/etc/unifan`
 
 // Args
 const args = process.argv.slice(2);

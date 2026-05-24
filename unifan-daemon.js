@@ -5,13 +5,10 @@ const fs = require("fs");
 const os = require('os');
 
 // Constants
-const CONFIG_DIR=`${os.homedir()}/.config/unifan`
+const CONFIG_DIR=`/etc/unifan`
 
 // Config
-let config = {
-    "module": "",
-    "profile": ""
-}
+let config
 let profile = []
 let usedModule
 let FanMode = "auto"
@@ -23,11 +20,14 @@ async function loadConfig() {
 
     let success = true
     let errMsg = ""
-    
+    console.log(3)
     try {
-        if (await fs.existsSync(`${CONFIG_DIR}/config.json`)) {
-            config = JSON.parse(await fs.readFileSync(`${CONFIG_DIR}/config.json`, 'utf8').toString())
-        } else {console.error()}
+        console.log(`${CONFIG_DIR}/config.json`)
+        if (fs.existsSync(`${CONFIG_DIR}/config.json`)) {
+            let tempString = await fs.readFileSync(`${CONFIG_DIR}/config.json`, 'utf8').toString()
+            config = JSON.parse(tempString)
+        } else {console.log("4")}
+        console.log(`${CONFIG_DIR}/config.json`)
 
     } catch (err) {
         success = false
@@ -42,7 +42,7 @@ async function loadProfile() {
 
     let success = true
     let errMsg = ""
-    
+    console.log(config)
     try {
         if (await fs.existsSync(`${config.profile}`)) {
             profile = JSON.parse(await fs.readFileSync(`${config.profile}`, 'utf-8').toString())
@@ -71,7 +71,7 @@ async function loadModule() {
         errMsg = err
     }
 
-    if (!success) {console.error(errMsg)}
+    if (!success) {console.error(errMsg, config)}
 
 }
 
