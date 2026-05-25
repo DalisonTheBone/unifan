@@ -37,7 +37,7 @@ Fan profiles are formatted json files, a array of arrays that control the fan ru
 [rule1, rule2, rule3]
 ```
 Every 3 seconds, your computer fan's will check to see if it satisfys one of these rules and set the fan speed acordingly.
-A Rule is formatted as so:
+A rule is formatted as so:
 ```json
 [Fan_Speed_Percentage, Tempature_Range]
 ```
@@ -85,4 +85,4 @@ module.exports = {
 ```
 
 ## Contribution
-On the off chance someone see's and they have something to contribute, feel free! You can contact me an I'll go review it. Hope this project helps anyone who uses it.
+On the off chance someone see's and they have something to contribute, feel free! You can contact me and I'll go review it. Hope this project helps anyone who uses it.
